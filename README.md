@@ -11,5 +11,6 @@ weights := [][]float64{
     {-0.1, 0.1, 0.0},
     {-0.3, 0.0, 0.0},
 }
-sfm, err := SoftmaxLayer(InputLayer(3), biases, weights)
+net, err := SoftmaxLayer(InputLayer(3), biases, weights)
+predictions, err := net.GetOutput([]float64{3, 2, 1})
 ```
