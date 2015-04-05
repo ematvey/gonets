@@ -2,6 +2,7 @@ package gonets
 
 import (
 	"errors"
+	"fmt"
 	"math"
 )
 
@@ -19,7 +20,9 @@ type hiddenLayer struct {
 func (l *hiddenLayer) AttachInputs(inputs Layer) error {
 	for i := range l.u {
 		if inputs.GetSize() != len(l.u[i].w) {
-			return errors.New("incorrect dimensionality on input")
+			return errors.New(fmt.Sprintf(
+				"cannot attach layers, input layer dim: %+v, receiving layer dim: %+v", inputs.GetSize(), len(l.u[i].w),
+			))
 		}
 	}
 	l.i = inputs
