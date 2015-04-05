@@ -16,6 +16,10 @@ func RectifyLayer(input Layer, biases []float64, weights [][]float64) (Layer, er
 	return MakeLayer(input, Rectify, biases, weights)
 }
 
+func TanhLayer(input Layer, biases []float64, weights [][]float64) (Layer, error) {
+	return MakeLayer(input, Tanh, biases, weights)
+}
+
 func SoftmaxLayer(input Layer, biases []float64, weights [][]float64) (Layer, error) {
 	return MakeLayer(input, Softmax, biases, weights)
 }

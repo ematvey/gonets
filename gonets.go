@@ -84,6 +84,14 @@ func Rectify(in []float64) (out []float64) {
 	return
 }
 
+func Tanh(in []float64) (out []float64) {
+	out = make([]float64, len(in))
+	for i, v := range in {
+		out[i] = math.Tanh(v)
+	}
+	return
+}
+
 func Softmax(in []float64) (out []float64) {
 	out = make([]float64, len(in))
 	var max float64
