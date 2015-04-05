@@ -11,7 +11,7 @@ func NormalizerNew(mean, std []float64) (*Normalizer, error) {
 	if len(mean) != len(std) || len(mean) == 0 {
 		return nil, errors.New("incorrect lenghts")
 	}
-	return &Normalizer{mean, std}
+	return &Normalizer{mean, std}, nil
 }
 
 func (n *Normalizer) Normalize(in []float64) (out []float64) {
