@@ -14,10 +14,10 @@ func NormalizerNew(mean, std []float64) (*Normalizer, error) {
 	return &Normalizer{mean, std}, nil
 }
 
-func (n *Normalizer) Normalize(in []float64) (out []float64) {
+func (n *Normalizer) Restore(in []float64) (out []float64) {
 	out = make([]float64, len(in))
 	for i := range in {
-		out[i] = in[i]*n.std[i] + n.mean[i]
+		out[i] = (in[i] - n.mean[i]) / n.std[i]
 	}
 	return
 }
