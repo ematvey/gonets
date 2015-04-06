@@ -6,6 +6,8 @@ import (
 	"math"
 )
 
+type actFunc func([]float64) []float64
+
 type unit struct {
 	b float64
 	w []float64
@@ -13,7 +15,7 @@ type unit struct {
 
 type hiddenLayer struct {
 	i Layer
-	a ActivationFunc
+	a actFunc
 	u []unit
 }
 
@@ -72,7 +74,7 @@ func (l inputLayer) GetOutput(inputs []float64) ([]float64, error) {
 	return inputs, nil
 }
 
-func Rectify(in []float64) (out []float64) {
+func rectify(in []float64) (out []float64) {
 	out = make([]float64, len(in))
 	for i, v := range in {
 		if v > 0 {
@@ -84,7 +86,7 @@ func Rectify(in []float64) (out []float64) {
 	return
 }
 
-func Tanh(in []float64) (out []float64) {
+func tanh(in []float64) (out []float64) {
 	out = make([]float64, len(in))
 	for i, v := range in {
 		out[i] = math.Tanh(v)
@@ -92,7 +94,7 @@ func Tanh(in []float64) (out []float64) {
 	return
 }
 
-func Softmax(in []float64) (out []float64) {
+func softmax(in []float64) (out []float64) {
 	out = make([]float64, len(in))
 	var max float64
 	for i, v := range in {
@@ -113,7 +115,15 @@ func Softmax(in []float64) (out []float64) {
 	return
 }
 
-func MakeLayer(input Layer, activation ActivationFunc, biases []float64, weights [][]float64) (Layer, error) {
+func logit(in []float64) (out []float64) {
+	out = make([]float64, len(in))
+	for i, v := range in {
+		out[i] = 1 / (1 + math.Exp(-v))
+	}
+	return
+}
+
+func makeLayer(input Layer, activation actFunc, biases []float64, weights [][]float64) (Layer, error) {
 	if len(biases) != len(weights) {
 		return nil, errors.New("layer misspecification")
 	}
